@@ -1,6 +1,3 @@
-#ifndef _WIFI_H_
-#define _WIFI_H_
-
 #include "freertos/FreeRTOS.h"
 #include "lwip/ip_addr.h"
 #include "esp_system.h"
@@ -156,5 +153,3 @@ const char* WiFiClass::macAddress()
 }
 
 WiFiClass WiFi;
-
-#endif

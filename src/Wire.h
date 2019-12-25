@@ -1,5 +1,5 @@
-#ifndef TwoWire_h
-#define TwoWire_h
+#ifndef _Wire_h_
+#define _Wire_h_
 
 #include "inttypes.h"
 #include "string.h"

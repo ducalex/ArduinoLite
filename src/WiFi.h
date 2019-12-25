@@ -1,3 +1,6 @@
+#ifndef _WiFi_h_
+#define _WiFi_h_
+
 #include "esp_wifi.h"
 
 typedef enum {
@@ -53,3 +56,5 @@ class WiFiClass
 };
 
 extern WiFiClass WiFi;
+
+#endif

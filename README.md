@@ -12,13 +12,14 @@ Currently implemented:
 - The Wire library
 - The WiFi library
 - The String library
+- Partial SD library (File isn't implemented, unistd functions are available)
 
 To be implemented:
+- ADC/DAC (analogRead/analogWrite)
 - SPI
 
 Could be added for convenience:
 - Stream/Print/Serial (To make display libraries work with no changes)
-- SD (to avoid all the boilerplate esp-idf code)
 
 Out of scope:
 - The rest

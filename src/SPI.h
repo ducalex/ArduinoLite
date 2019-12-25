@@ -1,5 +1,5 @@
-#ifndef _SPI_H_
-#define _SPI_H_
+#ifndef _SPI_h_
+#define _SPI_h_
 
 #include "inttypes.h"
 #include "string.h"
