@@ -9,6 +9,7 @@
 #include "unistd.h"
 #include "math.h"
 #include "WString.h"
+#include "Print.h"
 
 typedef bool boolean;
 typedef uint8_t byte;
@@ -37,8 +38,8 @@ typedef unsigned int word;
 #define digitalPinToInterrupt(pin)  (digitalPinIsValid(pin) ? (pin) : -1)
 #define digitalPinHasPWM(pin)       (digitalPinCanOutput(pin))
 
-#define analogWrite(pin, val)
-#define analogRead(pin)
+void analogWrite(uint8_t pin, long val);
+long analogRead(uint8_t pin);
 
 #define attachInterrupt(pin, cb, mode) attachInterruptArg(pin, cb, NULL, mode);
 #define attachInterruptArg(pin, cb, arg, mode)
@@ -50,6 +51,7 @@ typedef unsigned int word;
 #define delayMicroseconds(us)  usleep(us)
 #define yield()  vPortYield()
 #define NOP()  asm volatile ("nop")
+#define PGM_P  const char *
 #define PROGMEM
 
 #define pgm_read_byte(addr)   (*(const unsigned char *)(addr))

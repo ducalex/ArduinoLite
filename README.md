@@ -1,4 +1,4 @@
-ArduinoLite is a lightweight Arduino library for the ESP32. My goal was to provide the minimum needed to be able to use Arduino sensors libraries with little to no change.
+ArduinoLite is a lightweight Arduino library for the ESP32. My goal was to provide the minimum needed to be able to use Arduino sensors and textual display libraries with little to no change.
 
 Arduino-esp32 is a great project but it is just a port of Arduino-esp8266 and as such it contains custom, incomplete, 
 and often buggy implementations of the various peripherals (I2C, SD Card, Wifi, SPI, etc). This becomes an issue if
@@ -9,8 +9,9 @@ is a wrapper around the native esp-idf API.
 
 Currently implemented:
 - The basic functions (pinMode, digitalWrite, millis, etc)
-- The Wire library
 - The WiFi library
+- The Wire library
+- The Print library
 - The String library
 - Partial SD library (File isn't implemented, unistd functions are available)
 
@@ -18,12 +19,8 @@ To be implemented:
 - ADC/DAC (analogRead/analogWrite)
 - SPI
 
-Could be added for convenience:
-- Stream/Print/Serial (To make display libraries work with no changes)
-
 Out of scope:
 - The rest
 
-
 ## Credits:
-- The WString is taken from Arduino (AVR)
+- The WString and Print classes are taken from Arduino (AVR)

@@ -1,5 +1,15 @@
 #include "Arduino.h"
 
+void analogWrite(uint8_t pin, long val)
+{
+
+}
+
+long analogRead(uint8_t pin)
+{
+	return 0;
+}
+
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout)
 {
     return 0;
