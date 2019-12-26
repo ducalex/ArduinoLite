@@ -1,11 +1,7 @@
 #ifndef _Wire_h_
 #define _Wire_h_
 
-#include "inttypes.h"
-#include "string.h"
-#include "stddef.h"
-#include "esp_log.h"
-#include "driver/gpio.h"
+#include "Arduino.h"
 #include "driver/i2c.h"
 
 class TwoWire

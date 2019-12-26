@@ -1,10 +1,7 @@
 #ifndef _SPI_h_
 #define _SPI_h_
 
-#include "inttypes.h"
-#include "string.h"
-#include "stddef.h"
-#include "esp_log.h"
+#include "Arduino.h"
 
 #define SPI_HAS_TRANSACTION 1
 #define SPI_HAS_NOTUSINGINTERRUPT 1
@@ -22,13 +19,6 @@
 #define SPI_MODE1 0x04
 #define SPI_MODE2 0x08
 #define SPI_MODE3 0x0C
-
-#ifndef LSBFIRST
-#define LSBFIRST 0
-#endif
-#ifndef MSBFIRST
-#define MSBFIRST 1
-#endif
 
 class SPISettings
 {

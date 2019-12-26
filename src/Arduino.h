@@ -14,6 +14,8 @@ typedef bool boolean;
 typedef uint8_t byte;
 typedef unsigned int word;
 
+#define ARDUINO 100 // Some libraries need this
+
 #define F_CPU (CONFIG_ESP32_DEFAULT_CPU_FREQ_MHZ * 1000000U)
 
 #define LSBFIRST 0
@@ -64,11 +66,11 @@ typedef unsigned int word;
 #define highByte(value) ((uint8_t)((value) >> 8))
 
 #undef abs
-#define abs(x)   ((x)>0?(x):-(x))
+#define abs(x)   ((x) > 0 ? (x) : -(x))
 #define min(a,b) ((a) < (b) ? (a) : (b))
 #define max(a,b) ((a) > (b) ? (a) : (b))
+#define round(x) ((x) >= 0 ? (long)((x) + 0.5) : (long)((x) - 0.5))
 #define constrain(amt, low, high)  ((amt) < (low) ? (low) : ((amt) > (high) ? (high) : (amt)))
-#define round(x)  ((x) >= 0 ? (long)((x) + 0.5) : (long)((x) - 0.5))
 long map(long x, long in_min, long in_max, long out_min, long out_max);
 void randomSeed(long seed);
 long random(long min, long max);
@@ -80,7 +82,7 @@ void noInterrupts();
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout);
 unsigned long pulseInLong(uint8_t pin, uint8_t state, unsigned long timeout);
 
-void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val);
 uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder);
+void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t value);
 
 #endif
