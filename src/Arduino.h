@@ -7,7 +7,6 @@
 #include "esp_log.h"
 #include "stdlib.h"
 #include "unistd.h"
-#include "math.h"
 #include "WString.h"
 #include "Print.h"
 
@@ -67,13 +66,22 @@ long analogRead(uint8_t pin);
 #define lowByte(value)  ((uint8_t)(value))
 #define highByte(value) ((uint8_t)((value) >> 8))
 
-#undef abs
-#define abs(x)   ((x) > 0 ? (x) : -(x))
-#define min(a,b) ((a) < (b) ? (a) : (b))
-#define max(a,b) ((a) > (b) ? (a) : (b))
-#define round(x) ((x) >= 0 ? (long)((x) + 0.5) : (long)((x) - 0.5))
-#define constrain(amt, low, high)  ((amt) < (low) ? (low) : ((amt) > (high) ? (high) : (amt)))
+#ifdef __cplusplus
+#include <cmath>
+#include <algorithm>
+using std::abs;
+using std::min;
+using std::max;
+using std::isnan;
+using std::isinf;
+using std::ceil;
+using std::floor;
+using std::pow;
+using std::sqrt;
+#define constrain(amt, low, high)  (std::max(low, std::min(amt, high)));
 long map(long x, long in_min, long in_max, long out_min, long out_max);
+#endif
+
 void randomSeed(long seed);
 long random(long min, long max);
 long random(long max);

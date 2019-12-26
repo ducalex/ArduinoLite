@@ -2,6 +2,7 @@
 #define _SPI_h_
 
 #include "Arduino.h"
+#include "driver/spi_master.h"
 
 #define SPI_HAS_TRANSACTION 1
 #define SPI_HAS_NOTUSINGINTERRUPT 1
@@ -29,19 +30,24 @@ class SPISettings
 
 class SPIClass
 {
+  private:
+    spi_device_handle_t spi = nullptr;
+    spi_host_device_t host = VSPI_HOST;
+    spi_transaction_t transaction;
   public:
-    static void begin() {}
-    static void end() {}
-    static void usingInterrupt(uint8_t interruptNumber) {}
-    static void notUsingInterrupt(uint8_t interruptNumber) {}
-    static void beginTransaction(SPISettings settings) {}
-    static uint8_t transfer(uint8_t data) { return 0;}
-    static uint16_t transfer16(uint16_t data) { return 0;}
-    static void transfer(void *buf, size_t count) {}
-    static void endTransaction(void) {}
-    static void setBitOrder(uint8_t bitOrder) {}
-    static void setDataMode(uint8_t dataMode) {}
-    static void setClockDivider(uint8_t clockDiv) {}
+    SPIClass(spi_host_device_t bus = VSPI_HOST);
+    bool begin();
+    bool begin(uint8_t mosi, uint8_t miso, uint8_t sck, uint8_t cs);
+    void end(void);
+    void beginTransaction(SPISettings settings);
+    void endTransaction(void);
+    void setBitOrder(uint8_t bitOrder);
+    void setClockDivider(uint8_t clockDiv);
+    void setDataMode(uint8_t dataMode);
+    uint8_t transfer(uint8_t data);
+    void transfer(void *buf, size_t count);
+    void usingInterrupt(uint8_t interruptNumber);
+    void notUsingInterrupt(uint8_t interruptNumber);
 };
 
 extern SPIClass SPI;

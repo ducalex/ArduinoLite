@@ -73,13 +73,8 @@ wl_status_t WiFiClass::begin(char* ssid, char *password, int channel)
     disconnect(false);
 
     memset(&_config, 0, sizeof(_config));
-
     strncpy((char*)_config.sta.ssid, ssid, 32);
-    if (password != nullptr) {
-        strncpy((char*)_config.sta.password, password, 64);
-    } else {
-        strcpy((char*)_config.sta.password, "");
-    }
+    strncpy((char*)_config.sta.password, password ?: "", 64);
     _config.sta.channel = channel;
 
     return begin();
@@ -90,13 +85,10 @@ wl_status_t WiFiClass::beginAP(char* ssid, char *password, int channel)
     disconnect(false);
 
     memset(&_config, 0, sizeof(_config));
-
     strncpy((char*)_config.ap.ssid, ssid, 32);
-    if (password != nullptr) {
-        strncpy((char*)_config.ap.password, password, 64);
-    } else {
-        strcpy((char*)_config.ap.password, "");
-    }
+    strncpy((char*)_config.ap.password, password ?: "", 64);
+    _config.ap.authmode = _config.ap.password[0] ? WIFI_AUTH_WPA_PSK : WIFI_AUTH_OPEN;
+    _config.ap.max_connection = 4;
     _config.ap.channel = channel;
 
     return beginAP();
