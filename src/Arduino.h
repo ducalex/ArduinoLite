@@ -70,16 +70,20 @@ long analogRead(uint8_t pin);
 #include <cmath>
 #include <algorithm>
 using std::abs;
-using std::min;
-using std::max;
+using std::cos;
+using std::sin;
+using std::tan;
 using std::isnan;
 using std::isinf;
 using std::ceil;
 using std::floor;
 using std::pow;
 using std::sqrt;
-#define constrain(amt, low, high)  (std::max(low, std::min(amt, high)));
-long map(long x, long in_min, long in_max, long out_min, long out_max);
+template<typename T, typename U, typename V> T constrain(T amt, U low, V high);
+template<typename T> T map(T x, T in_min, T in_max, T out_min, T out_max);
+template<typename T, typename U> T max(T a, U b);
+template<typename T, typename U> T min(T a, U b);
+template<typename T> long round(T n);
 #endif
 
 void randomSeed(long seed);
