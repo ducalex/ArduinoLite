@@ -6,7 +6,7 @@ TwoWire::TwoWire(int8_t num):
 
 TwoWire::~TwoWire()
 {
-    flush();
+    end();
 }
 
 bool TwoWire::begin()
@@ -19,9 +19,7 @@ bool TwoWire::begin()
 
 bool TwoWire::begin(int sdaPin, int sclPin)
 {
-    if (init == true) {
-        end();
-    }
+    end(); // Clear the previous driver
     sda = (gpio_num_t)sdaPin;
     scl = (gpio_num_t)sclPin;
     i2c_config_t conf;
@@ -41,8 +39,10 @@ bool TwoWire::begin(int sdaPin, int sclPin)
 
 void TwoWire::end(void)
 {
-    i2c_driver_delete(num);
-    init = false;
+    if (init == true) {
+        i2c_driver_delete(num);
+        init = false;
+    }
 }
 
 void TwoWire::setClock(uint32_t frequency)
@@ -105,11 +105,6 @@ int TwoWire::readBytes(uint8_t* buffer, size_t size)
 int TwoWire::peek(void)
 {
     return (rxIndex < rxCount) ? rxBuffer[rxIndex] : -1;
-}
-
-void TwoWire::flush(void)
-{
-    //
 }
 
 size_t TwoWire::write(uint8_t data)

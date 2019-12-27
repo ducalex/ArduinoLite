@@ -1,5 +1,4 @@
 #include "Arduino.h"
-
 static int8_t adc_gpios[] = {
     21, -1, 22, -1, 20, -1, -1, -1, -1, -1,
     -1, -1, 25, 24, 26, 23, -1, -1, -1, -1,
@@ -9,6 +8,22 @@ static int8_t adc_gpios[] = {
 
 static adc_bits_width_t adc_resolution = ADC_WIDTH_BIT_12;
 
+
+void pinMode(uint8_t pin, uint16_t mode)
+{
+    gpio_set_direction((gpio_num_t)pin, (gpio_mode_t)(mode & 0xFF));
+    gpio_set_pull_mode((gpio_num_t)pin, (gpio_pull_mode_t)(mode >> 8));
+}
+
+uint8_t digitalRead(uint8_t pin)
+{
+    return (uint8_t)gpio_get_level((gpio_num_t)(pin));
+}
+
+void digitalWrite(uint8_t pin, uint16_t val)
+{
+    gpio_set_level((gpio_num_t)(pin), val);
+}
 
 uint16_t analogRead(uint8_t pin)
 {
@@ -149,10 +164,4 @@ template <typename T, typename U>
 inline T min(T a, U b)
 {
     return std::min(a, (T)b);
-}
-
-template <typename T>
-inline long round(T n)
-{
-    return ((n) >= 0 ? (long)((n) + 0.5) : (long)((n)-0.5));
 }

@@ -33,12 +33,9 @@ class TwoWire
     uint8_t requestFrom(int address, size_t size, bool sendStop = true);
 
     int available(void);
-    void flush(void);
     int peek(void);
     int read(void);
-
     int readBytes(uint8_t* data, size_t size);
-    int readBytes(char* data, size_t size) {return readBytes((uint8_t*)data, size); }
 
     size_t write(uint8_t b);
     size_t write(const uint8_t* data, size_t size);
