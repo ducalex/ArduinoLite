@@ -1,22 +1,82 @@
 #include "Arduino.h"
 
-void analogWrite(uint8_t pin, long val)
+static int8_t adc_gpios[] = {
+    21, -1, 22, -1, 20, -1, -1, -1, -1, -1,
+    -1, -1, 25, 24, 26, 23, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1, 28, 29, 27, -1, -1,
+    -1, -1, 14, 15, 16, 17, 10, 11, 12, 13,
+};
+
+static adc_bits_width_t adc_resolution = ADC_WIDTH_BIT_12;
+
+
+uint16_t analogRead(uint8_t pin)
 {
+    if (pin >= 40 || adc_gpios[pin] == -1) {
+        return 0;
+    } else if (adc_gpios[pin] < 20) {
+        adc1_channel_t channel = (adc1_channel_t)(adc_gpios[pin] - 10);
+        adc1_config_width(adc_resolution);
+        adc1_config_channel_atten(channel, ADC_ATTEN_DB_11);
+        return adc1_get_raw(channel);
+    } else {
+        adc2_channel_t channel = (adc2_channel_t)(adc_gpios[pin] - 20);
+        int value = 0;
+        adc2_config_channel_atten(channel, ADC_ATTEN_DB_11);
+        adc2_get_raw((adc2_channel_t)channel, adc_resolution, &value);
+        return value;
+    }
 }
 
-long analogRead(uint8_t pin)
+void analogReadResolution(uint8_t bits)
 {
-    return 0;
+    if (bits >= 9 && bits <= 12) {
+        adc_resolution = (adc_bits_width_t)(bits - 9);
+    }
+}
+
+void analogWrite(uint8_t pin, uint16_t val)
+{
+
+}
+
+void attachInterrupt(uint8_t interrupt, void (*userFunc)(void), int mode, void *arg)
+{
+
+}
+
+void detachInterrupt(uint8_t interrupt)
+{
+
+}
+
+inline void interrupts()
+{
+    //
+}
+
+inline void noInterrupts()
+{
+    //
 }
 
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout)
 {
+    timeout += micros();
+    while (timeout < micros() && digitalRead(pin) == state);
+    while (timeout < micros()) {
+        if (digitalRead(pin) == state) {
+            unsigned long pulse_start = micros();
+            while (timeout < micros() && digitalRead(pin) == state);
+            return micros() - pulse_start;
+        }
+    }
     return 0;
 }
 
 unsigned long pulseInLong(uint8_t pin, uint8_t state, unsigned long timeout)
 {
-    return 0;
+    return pulseIn(pin, state, timeout);
 }
 
 uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder)
@@ -47,16 +107,6 @@ void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t value
         digitalWrite(clockPin, HIGH);
         digitalWrite(clockPin, LOW);
     }
-}
-
-inline void interrupts()
-{
-    //
-}
-
-inline void noInterrupts()
-{
-    //
 }
 
 inline long random(long max)

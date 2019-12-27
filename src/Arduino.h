@@ -2,6 +2,8 @@
 #define ArduinoLite_h
 
 #include "driver/gpio.h"
+#include "driver/adc.h"
+#include "esp_adc_cal.h"
 #include "esp_system.h"
 #include "esp_timer.h"
 #include "esp_log.h"
@@ -33,16 +35,22 @@ typedef unsigned int word;
 #define digitalWrite(pin, val)  gpio_set_level((gpio_num_t)(pin), (uint32_t)(val))
 #define digitalRead(pin)        gpio_get_level((gpio_num_t)(pin))
 #define digitalPinIsValid(pin)      ((pin) < 40)
-#define digitalPinCanOutput(pin)    ((pin) < 34)
 #define digitalPinToInterrupt(pin)  (digitalPinIsValid(pin) ? (pin) : -1)
 #define digitalPinHasPWM(pin)       (digitalPinCanOutput(pin))
 
-void analogWrite(uint8_t pin, long val);
-long analogRead(uint8_t pin);
+uint16_t analogRead(uint8_t pin);
+void analogReadResolution(uint8_t bits);
+void analogWrite(uint8_t pin, uint16_t val);
 
-#define attachInterrupt(pin, cb, mode) attachInterruptArg(pin, cb, NULL, mode);
-#define attachInterruptArg(pin, cb, arg, mode)
-#define detachInterrupt(pin)
+void attachInterrupt(uint8_t interrupt, void (*userFunc)(void), int mode, void *arg = NULL);
+void detachInterrupt(uint8_t interrupt);
+
+void interrupts();
+void noInterrupts();
+
+#define clockCyclesPerMicrosecond() ( F_CPU / 1000000L )
+#define clockCyclesToMicroseconds(a) ( (a) / clockCyclesPerMicrosecond() )
+#define microsecondsToClockCycles(a) ( (a) * clockCyclesPerMicrosecond() )
 
 #define micros()  ((unsigned long)esp_timer_get_time())
 #define millis()  ((unsigned long)(esp_timer_get_time() / 1000ULL))
@@ -89,9 +97,6 @@ template<typename T> long round(T n);
 void randomSeed(long seed);
 long random(long min, long max);
 long random(long max);
-
-void interrupts();
-void noInterrupts();
 
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout);
 unsigned long pulseInLong(uint8_t pin, uint8_t state, unsigned long timeout);
