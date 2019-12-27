@@ -10,7 +10,7 @@
 #include "stdlib.h"
 #include "unistd.h"
 #include "WString.h"
-#include "Print.h"
+#include "Stream.h"
 
 typedef bool boolean;
 typedef uint8_t byte;

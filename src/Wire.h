@@ -3,8 +3,9 @@
 
 #include "Arduino.h"
 #include "driver/i2c.h"
+#include "Stream.h"
 
-class TwoWire
+class TwoWire: public Stream
 {
   private:
     i2c_port_t num;
@@ -35,12 +36,12 @@ class TwoWire
     int available(void);
     int peek(void);
     int read(void);
-    int readBytes(uint8_t* data, size_t size);
 
     size_t write(uint8_t b);
     size_t write(const uint8_t* data, size_t size);
     size_t write(const char* str) { return write((uint8_t*)str, strlen(str)); }
     size_t write(int data) { return write((uint8_t)data); }
+    using Print::write;
 };
 
 extern TwoWire Wire;

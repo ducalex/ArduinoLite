@@ -10,8 +10,7 @@ Currently implemented:
 - The Wire library
 - Partial WiFi library (Only WiFi class, no WiFiClient or WiFiServer)
 - Partial SD library (File isn't implemented, unistd functions are available)
-- The String library
-- The Print class
+- The Stream, String, and Print classes
 
 To be implemented:
 - DAC (analogWrite)
@@ -21,4 +20,4 @@ Out of scope:
 - The rest
 
 ## Credits:
-- The WString and Print classes are taken from Arduino (AVR)
+- The Stream, String, and Print classes are taken from Arduino (AVR)

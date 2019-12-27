@@ -91,17 +91,6 @@ int TwoWire::read(void)
     return (rxIndex < rxCount) ? rxBuffer[rxIndex++] : -1;
 }
 
-int TwoWire::readBytes(uint8_t* buffer, size_t size)
-{
-    for (int b, i = 0; i < size; ++i) {
-        if ((b = read()) < 0) {
-            return i;
-        }
-        buffer[i] = (uint8_t)b;
-    }
-    return size;
-}
-
 int TwoWire::peek(void)
 {
     return (rxIndex < rxCount) ? rxBuffer[rxIndex] : -1;
