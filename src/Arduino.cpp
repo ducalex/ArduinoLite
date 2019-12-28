@@ -11,6 +11,8 @@ static adc_bits_width_t adc_resolution = ADC_WIDTH_BIT_12;
 
 void pinMode(uint8_t pin, uint16_t mode)
 {
+    if (pin == 25) dac_output_disable(DAC_CHANNEL_1);
+    if (pin == 26) dac_output_disable(DAC_CHANNEL_2);
     gpio_set_direction((gpio_num_t)pin, (gpio_mode_t)(mode & 0xFF));
     gpio_set_pull_mode((gpio_num_t)pin, (gpio_pull_mode_t)(mode >> 8));
 }
@@ -52,7 +54,14 @@ void analogReadResolution(uint8_t bits)
 
 void analogWrite(uint8_t pin, uint16_t val)
 {
-
+    if (pin == 25) {
+        dac_output_enable(DAC_CHANNEL_1);
+        dac_output_voltage(DAC_CHANNEL_1, val);
+    }
+    if (pin == 26) {
+        dac_output_enable(DAC_CHANNEL_2);
+        dac_output_voltage(DAC_CHANNEL_2, val);
+    }
 }
 
 void attachInterrupt(uint8_t interrupt, void (*userFunc)(void), int mode, void *arg)
@@ -140,6 +149,7 @@ inline long random(long min, long max)
 
 inline void randomSeed(long seed)
 {
+    //
 }
 
 template <typename T, typename U, typename V>
@@ -152,16 +162,4 @@ template <typename T>
 inline T map(T x, T in_min, T in_max, T out_min, T out_max)
 {
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
-template <typename T, typename U>
-inline T max(T a, U b)
-{
-    return std::max(a, (T)b);
-}
-
-template <typename T, typename U>
-inline T min(T a, U b)
-{
-    return std::min(a, (T)b);
 }

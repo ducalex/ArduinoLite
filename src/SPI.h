@@ -24,16 +24,20 @@
 class SPISettings
 {
   public:
-    SPISettings(uint32_t clock, uint8_t bitOrder, uint8_t dataMode) {}
-    SPISettings() { SPISettings(4000000, MSBFIRST, SPI_MODE0); }
+    uint32_t clock;
+    uint32_t bitOrder;
+    uint32_t dataMode;
+    SPISettings(uint32_t clock = SPI_MASTER_FREQ_8M, uint8_t bitOrder = MSBFIRST, uint8_t dataMode = SPI_MODE0) {}
 };
 
 class SPIClass
 {
   private:
-    spi_device_handle_t spi = nullptr;
     spi_host_device_t host = VSPI_HOST;
+    spi_device_handle_t spi = nullptr;
     spi_transaction_t transaction;
+    bool host_init = false;
+    int  device_cs = -1;
   public:
     SPIClass(spi_host_device_t bus = VSPI_HOST);
     bool begin();
@@ -41,9 +45,7 @@ class SPIClass
     void end(void);
     void beginTransaction(SPISettings settings);
     void endTransaction(void);
-    void setBitOrder(uint8_t bitOrder);
-    void setClockDivider(uint8_t clockDiv);
-    void setDataMode(uint8_t dataMode);
+    uint16_t transfer16(uint16_t data);
     uint8_t transfer(uint8_t data);
     void transfer(void *buf, size_t count);
     void usingInterrupt(uint8_t interruptNumber);

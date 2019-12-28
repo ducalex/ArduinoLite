@@ -15,15 +15,13 @@ SPIClass::SPIClass(spi_host_device_t bus)
 
 bool SPIClass::begin()
 {
-    return true;
+    return host_init;
 }
 
 bool SPIClass::begin(uint8_t mosi, uint8_t miso, uint8_t sck, uint8_t cs)
 {
-    if (spi != nullptr) {
-        end();
-    }
-    /*
+    end(); // Clear previous settings
+
     spi_bus_config_t buscfg = {
         .mosi_io_num = mosi,
         .miso_io_num = miso,
@@ -33,66 +31,55 @@ bool SPIClass::begin(uint8_t mosi, uint8_t miso, uint8_t sck, uint8_t cs)
         .max_transfer_sz = 2048
     };
 
-    spi_device_interface_config_t devcfg = {
-        .mode = 0,
-        .clock_speed_hz = SPI_MASTER_FREQ_16M,
-        .spics_io_num = cs,
-        .queue_size = 7,
-        .pre_cb = nullptr,
-    };
+    host_init = spi_bus_initialize(host, &buscfg, 2) == ESP_OK;
+    device_cs = cs;
 
-    if (spi_bus_initialize(host, &buscfg, 2) != ESP_OK) {
-        return false;
-    }
-
-    if (spi_bus_add_device(host, &devcfg, &spi) != ESP_OK) {
-        return false;
-    }
-    */
-    return true;
+    return host_init;
 }
 
 void SPIClass::end()
 {
     if (spi != nullptr) {
         spi_bus_remove_device(spi);
+        spi = nullptr;
+    }
+    if (host_init == true) {
         spi_bus_free(host);
+        host_init = false;
     }
 }
 
 void SPIClass::beginTransaction(SPISettings settings)
 {
-    memset(&transaction, 0, sizeof(transaction));
+    spi_device_interface_config_t devcfg = {
+        .mode = settings.dataMode,
+        .clock_speed_hz = settings.clock,
+        .spics_io_num = device_cs,
+        .queue_size = 7,
+        .pre_cb = nullptr,
+    };
+
+    if (spi_bus_add_device(host, &devcfg, &spi) != ESP_OK) {
+        // start transaction
+        memset(&transaction, 0, sizeof(transaction));
+    }
 }
 
 void SPIClass::endTransaction(void)
 {
     spi_device_transmit(spi, &transaction);
-}
-
-void SPIClass::setBitOrder(uint8_t bitOrder)
-{
-    //
-}
-
-void SPIClass::setClockDivider(uint8_t clockDiv)
-{
-    //
-}
-
-void SPIClass::setDataMode(uint8_t dataMode)
-{
-    //
+    spi_bus_remove_device(spi);
+    spi = nullptr;
 }
 
 uint8_t SPIClass::transfer(uint8_t data)
 {
-    return 0;
+
 }
 
 void SPIClass::transfer(void *buf, size_t count)
 {
-    //
+
 }
 
 void SPIClass::usingInterrupt(uint8_t interruptNumber)

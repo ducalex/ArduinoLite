@@ -8,13 +8,10 @@ and often buggy implementations of the various peripherals (I2C, SD Card, Wifi, 
 Currently implemented:
 - Most Arduino [language functions](https://www.arduino.cc/reference/en/)
 - The Wire library
+- The SPI library (Work in progress)
 - Partial WiFi library (Only WiFi class, no WiFiClient or WiFiServer)
 - Partial SD library (File isn't implemented, unistd functions are available)
 - The Stream, String, and Print classes
-
-To be implemented:
-- DAC (analogWrite)
-- SPI
 
 Out of scope:
 - The rest

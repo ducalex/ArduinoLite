@@ -7,6 +7,7 @@
 #include "esp_log.h"
 #include "driver/gpio.h"
 #include "driver/adc.h"
+#include "driver/dac.h"
 #include "stdlib.h"
 #include "unistd.h"
 #include "WString.h"
@@ -97,11 +98,11 @@ using std::ceil;
 using std::floor;
 using std::pow;
 using std::sqrt;
+using std::min;
+using std::max;
 using ::round;
 template<typename T, typename U, typename V> T constrain(T amt, U low, V high);
 template<typename T> T map(T x, T in_min, T in_max, T out_min, T out_max);
-template<typename T, typename U> T max(T a, U b);
-template<typename T, typename U> T min(T a, U b);
 #endif
 
 #endif
