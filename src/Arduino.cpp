@@ -151,15 +151,3 @@ inline void randomSeed(long seed)
 {
     //
 }
-
-template <typename T, typename U, typename V>
-inline T constrain(T amt, U low, V high)
-{
-    return max(min(amt, high), low);
-}
-
-template <typename T>
-inline T map(T x, T in_min, T in_max, T out_min, T out_max)
-{
-    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}

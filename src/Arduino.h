@@ -98,11 +98,31 @@ using std::ceil;
 using std::floor;
 using std::pow;
 using std::sqrt;
-using std::min;
-using std::max;
 using ::round;
-template<typename T, typename U, typename V> T constrain(T amt, U low, V high);
-template<typename T> T map(T x, T in_min, T in_max, T out_min, T out_max);
 #endif
+
+template <typename T, typename U, typename V>
+inline T constrain(T amt, U low, V high)
+{
+    return max(min(amt, high), low);
+}
+
+template <typename T>
+inline T map(T x, T in_min, T in_max, T out_min, T out_max)
+{
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+template <typename T, typename U>
+inline T max(T a, U b)
+{
+    return std::max(a, (T)b);
+}
+
+template <typename T, typename U>
+inline T min(T a, U b)
+{
+    return std::min(a, (T)b);
+}
 
 #endif
