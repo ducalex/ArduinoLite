@@ -31,10 +31,16 @@ class WiFiClass
     char _localIP[32];
     char _macAddress[32];
 
+    bool init();
+    bool deinit();
+
   public:
     wl_status_t status() { return _status; }
     wl_mode_t   mode() { return _mode; }
     const char* SSID() { return (char*)_config.ap.ssid; }
+    const char* localIP();
+    const char* macAddress();
+    int8_t RSSI();
 
     wl_status_t begin();
     wl_status_t begin(char* ssid, char *password = nullptr, int channel = 0);
@@ -47,12 +53,6 @@ class WiFiClass
     wl_status_t waitForResult();
     wl_status_t reconnect();
     wl_status_t disconnect(bool wifioff = false);
-
-    const char* localIP();
-    const char* macAddress();
-
-    bool init();
-    bool deinit();
 };
 
 extern WiFiClass WiFi;

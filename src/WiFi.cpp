@@ -144,4 +144,13 @@ const char* WiFiClass::macAddress()
     return _macAddress;
 }
 
+int8_t WiFiClass::RSSI()
+{
+    wifi_ap_record_t wifidata;
+    if (esp_wifi_sta_get_ap_info(&wifidata) == ESP_OK) {
+        return wifidata.rssi;
+    }
+    return 0;
+}
+
 WiFiClass WiFi;
