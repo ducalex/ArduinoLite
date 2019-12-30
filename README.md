@@ -10,7 +10,6 @@ Currently implemented:
 - The Wire library
 - The SPI library (Work in progress)
 - Partial WiFi library (Only WiFi class, no WiFiClient or WiFiServer)
-- Partial SD library (File isn't implemented, unistd functions are available)
 - The Stream, String, and Print classes
 
 Out of scope:

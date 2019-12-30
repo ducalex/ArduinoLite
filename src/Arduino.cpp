@@ -151,3 +151,23 @@ inline void randomSeed(long seed)
 {
     //
 }
+
+/*
+#include "esp_vfs_fat.h"
+#include "driver/sdmmc_host.h"
+#include "driver/sdspi_host.h"
+bool sd_init(int miso, int mosi, int sck, int cs)
+{
+    sdmmc_host_t host = SDSPI_HOST_DEFAULT();
+    sdspi_slot_config_t slot_config = SDSPI_SLOT_CONFIG_DEFAULT();
+    slot_config.gpio_miso = (gpio_num_t)miso;
+    slot_config.gpio_mosi = (gpio_num_t)mosi;
+    slot_config.gpio_sck  = (gpio_num_t)sck;
+    slot_config.gpio_cs   = (gpio_num_t)cs;
+    esp_vfs_fat_sdmmc_mount_config_t mount_config = {
+        .format_if_mount_failed = false,
+        .max_files = 8
+    };
+    return esp_vfs_fat_sdmmc_mount(mountPoint, &host, &slot_config, &mount_config, NULL) == ESP_OK;
+}
+*/

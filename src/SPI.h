@@ -24,10 +24,10 @@
 class SPISettings
 {
   public:
-    uint32_t clock;
-    uint32_t bitOrder;
-    uint32_t dataMode;
-    SPISettings(uint32_t clock = SPI_MASTER_FREQ_8M, uint8_t bitOrder = MSBFIRST, uint8_t dataMode = SPI_MODE0) {}
+    int clock;
+    uint8_t bitOrder;
+    uint8_t dataMode;
+    SPISettings(int clock = SPI_MASTER_FREQ_8M, uint8_t bitOrder = MSBFIRST, uint8_t dataMode = SPI_MODE0) {}
 };
 
 class SPIClass

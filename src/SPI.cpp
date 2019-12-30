@@ -51,6 +51,7 @@ void SPIClass::end()
 
 void SPIClass::beginTransaction(SPISettings settings)
 {
+    /*
     spi_device_interface_config_t devcfg = {
         .mode = settings.dataMode,
         .clock_speed_hz = settings.clock,
@@ -63,6 +64,7 @@ void SPIClass::beginTransaction(SPISettings settings)
         // start transaction
         memset(&transaction, 0, sizeof(transaction));
     }
+    */
 }
 
 void SPIClass::endTransaction(void)
@@ -74,7 +76,7 @@ void SPIClass::endTransaction(void)
 
 uint8_t SPIClass::transfer(uint8_t data)
 {
-
+    return 0;
 }
 
 void SPIClass::transfer(void *buf, size_t count)
